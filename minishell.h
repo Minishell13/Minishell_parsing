@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:58:45 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/22 11:49:52 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:21:19 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef enum s_token_type
 {
     TOKEN_COMMAND,
     TOKEN_PIPE,
+    TOKEN_QUOTES,
     TOKEN_REDIR_IN,    // <
     TOKEN_REDIR_OUT,   // >
     TOKEN_REDIR_APPEND,// >>

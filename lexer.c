@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:00:23 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/22 12:14:08 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/22 13:18:14 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 t_token_type get_token_type(char *str)
 {
     if (str == NULL || *str == '\0')
-        return TOKEN_EMPTY; 
-    if (ft_strncmp(str, "|", ft_strlen(str)) == 0)
+        return TOKEN_EMPTY;
+    if (str[0] == '"')
+        return  TOKEN_QUOTES;
+    else if (ft_strncmp(str, "|", ft_strlen(str)) == 0)
         return TOKEN_PIPE;
     else if (ft_strncmp(str, ">", ft_strlen(str)) == 0)
         return TOKEN_REDIR_OUT;
@@ -35,9 +37,12 @@ t_token *create_token(char *value)
 {
     t_token *token;
 
+    if (!value)
+        return NULL;
     token = malloc(sizeof(t_token));
     token->value = ft_strdup(value);
     token->type = get_token_type(value);
+    token->next = NULL; 
     return (token);
 }
 
@@ -115,7 +120,6 @@ int is_operator_char(char c)
 t_token *lexer(char *line) 
 {
     int i;
-    char op[3];
     char *word;
     int start;
     t_token *head = NULL;
@@ -132,28 +136,63 @@ t_token *lexer(char *line)
         // Handle operators like &&, ||, >>
         if (is_operator_char(line[i]))
         {
-            op[0] = line[i];
+            start = i;
             if (line[i + 1] && line[i + 1] == line[i]) 
             {
-                op[1] = line[i + 1];
+                if (line[i + 2] && line[i + 2] == line[i])
+                {
+                    printf("syntax error: too many '%c'\n", line[i]);
+                    return (NULL);
+                }
                 i++;
             }
-            else
-                op[1] = '\0';
-            token_add_back(&head, create_token(op));
             i++;
+            word = ft_substr(line, start, i - start);
+            if (!word)
+                return (NULL);
+            token_add_back(&head, create_token(word));
+            free(word);
             if (line[i] == '\n')
                 line[i] = '\0';
         }
-        else 
+        else if (line[i] == '"')
+        {
+            // read until you found close quote
+            start = i;
+            i++;
+            while (line[i])
+            {
+                if (line[i] == '"')
+                {
+                    i++;
+                    break;
+                }
+                if (line[i + 1] == '\0')
+                {
+                    printf("syntax error: missing closing quote\n");
+                    return (NULL);
+                }
+                i++;
+            }
+            word = ft_substr(line, start, i - start);
+            if (!word)
+                return (NULL);
+            token_add_back(&head, create_token(word));
+            free(word);
+            if (line[i] == '\n')
+                line[i] = '\0';
+        }
+        else
         {
             // Read a word until next space or operator
             start = i;
-            while (line[i] && !is_operator_char(line[i]) && line[i] != ' ' && line[i] != '\t')
+            while (line[i] && !is_operator_char(line[i]) && line[i] != ' ' && line[i] != '\t' && line[i] != '"')
                 i++;
             if (line[i - 1] == '\n')
                 line[i - 1] = '\0';
             word = ft_substr(line, start, i - start);
+            if (!word)
+                return (NULL);
             token_add_back(&head, create_token(word));
             free(word);
         }
