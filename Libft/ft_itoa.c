@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 12:54:05 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/27 16:01:19 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/10/30 11:06:47 by hwahmane          #+#    #+#             */
+/*   Updated: 2024/11/07 17:47:12 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,3 +67,8 @@ char	*ft_itoa(int n)
 	int_cpy(ptr, len, sign, num);
 	return (ptr);
 }
+
+// int main()
+// {
+// 	printf("%s\n", ft_itoa(123456789));
+// }

@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:14:53 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/23 15:33:10 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/22 10:31:46 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*get_n(char *stack, int fd)
 	buffer = malloc((size_t)BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
-	while (ft_strchr(stack, '\n') != 1)
+	while (ft_strchr2(stack, '\n') != 1)
 	{
 		i = read(fd, buffer, BUFFER_SIZE);
 		if (i <= 0)

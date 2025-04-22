@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/12 16:14:57 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/22 10:31:23 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/10/27 10:41:25 by hwahmane          #+#    #+#             */
+/*   Updated: 2024/11/07 13:55:32 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "../Libft/libft.h"
+char	*ft_strdup(const char *s1)
+{
+	int		len;
+	char	*ptr;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
+	len = ft_strlen(s1);
+	ptr = malloc(len + 1);
+	if (!ptr)
+		return (NULL);
+	ft_strlcpy(ptr, s1, len + 1);
+	return (ptr);
+}
 
-char	*get_next_line(int fd);
-int		ft_strchr2(const char *s, int c);
-int		before_n_stack(char *stack);
-int		after_n_stack(char *stack, int i);
-
-#endif
+// int main()
+// {
+// 	char *ptr = ft_strdup("hello");
+// 	printf("%s\n", ptr);
+// 	free(ptr);
+// }

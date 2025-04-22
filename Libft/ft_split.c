@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 17:49:40 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/13 20:59:46 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/10/29 07:22:26 by hwahmane          #+#    #+#             */
+/*   Updated: 2024/11/15 13:10:07 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	**free_array(char **array, int j)
 		j--;
 		free(array[j]);
 	}
-	free(array);
+	free (array);
 	return (NULL);
 }
 
@@ -81,3 +81,16 @@ char	**ft_split(char const *s, char c)
 	i = 0;
 	return (fill_array(s, c, array, i));
 }
+
+// int main()
+// {
+// 	 char **ptr = ft_split("hello world i'm here for testing split", '-');
+// 	 if (ptr == NULL)
+// 	 {
+// 		printf("(null)");
+// 		return (0);
+// 	 }
+// 	 printf("%s\n" ,ptr[0]);
+// 	 printf("%s\n" ,ptr[1]);
+// 	 free(ptr);
+// }

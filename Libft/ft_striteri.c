@@ -1,31 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/12 16:14:57 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/22 10:31:23 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/10/30 16:05:04 by hwahmane          #+#    #+#             */
+/*   Updated: 2024/11/07 13:51:27 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "../Libft/libft.h"
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
+{
+	unsigned int	i;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
+	if (s && f)
+	{
+		i = 0;
+		while (s[i])
+		{
+			f(i, &s[i]);
+			i++;
+		}
+	}
+}
 
-char	*get_next_line(int fd);
-int		ft_strchr2(const char *s, int c);
-int		before_n_stack(char *stack);
-int		after_n_stack(char *stack, int i);
+// void	f(unsigned int i, char *c)
+// {
+// 	if (i % 2)
+// 		*c = ft_toupper(*c);
+// }
 
-#endif
+// int main()
+// {
+// 	char s[] = "hello";
+// 	ft_striteri(s, f);
+// 	printf("%s\n", s);
+// }

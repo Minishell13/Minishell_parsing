@@ -1,52 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/12 16:15:00 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/22 10:31:15 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/10/26 13:35:16 by hwahmane          #+#    #+#             */
+/*   Updated: 2024/11/13 16:08:08 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
-int	ft_strchr2(const char *s, int c)
+int	ft_atoi(const char *str)
 {
 	int	i;
-
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	before_n_stack(char *stack)
-{
-	int	i;
+	int	k;
+	int	sign;
 
 	i = 0;
-	while (stack[i] != '\n' && stack[i] != '\0')
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
 		i++;
-	return (i);
-}
-
-int	after_n_stack(char *stack, int i)
-{
-	int	j;
-
-	j = 0;
-	while (stack[i])
+	sign = 1;
+	if (str[i] == '-' || str[i] == '+')
 	{
+		if (str[i] == '-')
+			sign = sign * -1;
 		i++;
-		j++;
 	}
-	return (j);
+	k = 0;
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
+	{
+		k = (k * 10) +(str[i] - 48);
+		i++;
+	}
+	return (k * sign);
 }
+
+// int main()
+// {
+// 	printf("%d",ft_atoi("    -123456789"));
+// }

@@ -1,7 +1,6 @@
 NAME = minishell
 
-SRCS = main.c ./get_next_line/get_next_line.c \
-		./get_next_line/get_next_line_utils.c
+SRCS = minishell.c lexer.c ./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -13,18 +12,18 @@ CFLAGS = -Wall -Wextra -Werror -g3
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@make -C libft
-	@$(CC) $(CFLAGS) $(OBJS) -Llibft -lft -o $(NAME)
+	@make -C Libft
+	@$(CC) $(CFLAGS) $(OBJS) -LLibft -lft -o $(NAME)
 
 %.o: %.c $(DEPS)
 	$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
 clean:
-	@make clean -C libft
+	@make clean -C Libft
 	@rm -f $(OBJS)
 
 fclean: clean
-	@make fclean -C libft
+	@make fclean -C Libft
 	@rm -rf $(NAME)
 
 re: fclean all

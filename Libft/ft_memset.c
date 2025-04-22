@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/12 16:14:57 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/22 10:31:23 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/10/22 15:58:50 by hwahmane          #+#    #+#             */
+/*   Updated: 2024/11/07 18:04:14 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "../Libft/libft.h"
+void	*ft_memset(void *str, int c, size_t n)
+{
+	char			*ptr;
+	unsigned char	uc;
+	size_t			i;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
+	ptr = str;
+	uc = (unsigned char)c;
+	i = 0;
+	while (i < n)
+		ptr[i++] = uc;
+	return (str);
+}
 
-char	*get_next_line(int fd);
-int		ft_strchr2(const char *s, int c);
-int		before_n_stack(char *stack);
-int		after_n_stack(char *stack, int i);
-
-#endif
+// int main()
+// {
+// 	char a[] = "hello";
+// 	printf("1 %s\n", ft_memset(a, '#', 3));
+// 	printf("2 %s\n", a);
+// }

@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 16:26:12 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/02/21 16:27:16 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/10/22 07:31:11 by hwahmane          #+#    #+#             */
+/*   Updated: 2024/11/07 17:56:09 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_isalpha(int c)
 {
-	size_t	i;
-
-	i = 0;
-	if (n == 0)
-		return (0);
-	while ((n - 1) > i && s1[i])
-	{
-		if (s1[i] != s2[i])
-		{
-			return ((unsigned char)(s1[i]) - (unsigned char)(s2[i]));
-		}
-		i++;
-	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 }
+
+// int	main()
+// {
+// 	printf("%d\n",ft_isalpha('@'));
+// 	printf("%d\n",ft_isalpha('a'));
+// }

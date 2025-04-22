@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/12 16:14:57 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/22 10:31:23 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/10/30 16:54:05 by hwahmane          #+#    #+#             */
+/*   Updated: 2024/11/08 17:30:37 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "../Libft/libft.h"
+void	ft_putchar_fd(char c, int fd)
+{
+	if (fd != -1)
+		write(fd, &c, 1);
+}
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
-
-char	*get_next_line(int fd);
-int		ft_strchr2(const char *s, int c);
-int		before_n_stack(char *stack);
-int		after_n_stack(char *stack, int i);
-
-#endif
+// int main()
+// {
+// 	char fd = open("end.txt", O_WRONLY | O_RDONLY | O_CREAT, 0777);
+// 	ft_putchar_fd('d', fd);
+// }

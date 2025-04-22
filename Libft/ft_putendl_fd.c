@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 18:09:16 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/13 21:00:19 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/10/31 20:42:17 by hwahmane          #+#    #+#             */
+/*   Updated: 2024/11/08 17:38:37 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+void	ft_putendl_fd(char *s, int fd)
 {
-	size_t	i;
-	size_t	j;
-
-	j = ft_strlen(src);
-	if (dstsize == 0 || !dst)
-		return (j);
-	i = 0;
-	while (i < dstsize - 1 && src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (j);
+	if (!s || fd == -1)
+		return ;
+	ft_putstr_fd(s, fd);
+	ft_putchar_fd('\n', fd);
 }
+
+// int main()
+// {
+// 	char fd = open("end.txt", O_WRONLY | O_RDONLY | O_CREAT, 0777);
+// 	ft_putendl_fd("HELLo WORLD", fd);
+// }

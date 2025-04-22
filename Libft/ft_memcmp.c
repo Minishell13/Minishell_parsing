@@ -1,52 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/12 16:15:00 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/22 10:31:15 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/10/26 09:06:27 by hwahmane          #+#    #+#             */
+/*   Updated: 2024/11/07 16:00:30 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
-int	ft_strchr2(const char *s, int c)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	int	i;
+	size_t				i;
+	const unsigned char	*str1;
+	const unsigned char	*str2;
 
-	if (!s)
-		return (0);
+	str1 = (const unsigned char *)s1;
+	str2 = (const unsigned char *)s2;
 	i = 0;
-	while (s[i])
+	while (n > i)
 	{
-		if (s[i] == c)
-			return (1);
+		if (str1[i] != str2[i])
+		{
+			return (str1[i] - str2[i]);
+		}
 		i++;
 	}
 	return (0);
 }
 
-int	before_n_stack(char *stack)
-{
-	int	i;
+// int main()
+// {
+// 	char s1[] = "abcd";
+// 	char s2[] = "abcdd";
 
-	i = 0;
-	while (stack[i] != '\n' && stack[i] != '\0')
-		i++;
-	return (i);
-}
-
-int	after_n_stack(char *stack, int i)
-{
-	int	j;
-
-	j = 0;
-	while (stack[i])
-	{
-		i++;
-		j++;
-	}
-	return (j);
-}
+// 	printf("%d",ft_memcmp(s1 , s2 , 9));
+// }

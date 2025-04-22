@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/12 16:14:57 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/22 10:31:23 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/10/24 16:26:05 by hwahmane          #+#    #+#             */
+/*   Updated: 2024/11/07 13:58:10 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "../Libft/libft.h"
+char	*ft_strchr(const char *s, int c)
+{
+	unsigned char	c2;
+	int				i;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
+	c2 = (unsigned char)c;
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == c2)
+			return ((char *)(&s[i]));
+		i++;
+	}
+	if ((char)c == '\0')
+		return ((char *)(&s[i]));
+	return (NULL);
+}
 
-char	*get_next_line(int fd);
-int		ft_strchr2(const char *s, int c);
-int		before_n_stack(char *stack);
-int		after_n_stack(char *stack, int i);
-
-#endif
+// int main()
+// {
+// 	printf("%s\n", ft_strchr("hello world",'w'));
+// }

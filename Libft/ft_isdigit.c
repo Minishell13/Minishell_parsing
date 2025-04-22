@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/13 15:56:46 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/13 20:59:28 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/10/22 09:38:38 by hwahmane          #+#    #+#             */
+/*   Updated: 2024/11/27 20:57:01 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+int	ft_isdigit(int c)
 {
-	size_t	s_len;
-
-	if (!s || fd < 0)
-		return ;
-	s_len = ft_strlen(s);
-	write(fd, s, s_len);
+	return ((c >= '0' && c <= '9'));
 }
+
+// int	main()
+// {
+// 	printf("%d\n",ft_isdigit('@'));
+// 	printf("%d\n",ft_isdigit('1'));
+// }

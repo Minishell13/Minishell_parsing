@@ -5,9 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 16:00:23 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/02/21 16:00:28 by hwahmane         ###   ########.fr       */
+/*   Created: 2025/04/22 09:45:00 by hwahmane          #+#    #+#             */
+/*   Updated: 2025/04/22 11:50:01 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int main(int ac, char **av, char **env)
+{
+    t_token *head;
+    char *line;
+
+    (void)ac;
+    (void)av;
+    (void)env;
+    line = get_next_line(0);
+    while (line)
+    {
+        head = lexer(line);
+        while (head)
+        {
+            printf("( %s ) --> %d \n", head->value, head->type);
+            head = head->next; 
+        }
+        line = get_next_line(0);
+    }
+}

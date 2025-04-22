@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 18:02:58 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/13 21:00:21 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/10/23 08:25:52 by hwahmane          #+#    #+#             */
+/*   Updated: 2024/11/07 18:07:29 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+void	ft_bzero(void *s, size_t n)
 {
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		i++;
-	}
-	return (i);
+	ft_memset(s, 0, n);
 }
+
+// int main()
+// {
+// 	char a[] = "hello";
+
+// 	ft_bzero(a, 3);
+// 	int i = 0;
+// 	while (i < 5)
+// 	{
+// 		if (a[i] == '\0')
+// 			printf("%c",'0');
+// 		printf("%c",a[i]);
+// 		i++;
+// 	}
+// }

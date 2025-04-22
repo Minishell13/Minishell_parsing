@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 18:47:21 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/23 15:29:25 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/11/01 12:25:45 by hwahmane          #+#    #+#             */
+/*   Updated: 2024/11/14 13:35:45 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+t_list	*ft_lstnew(void *content)
 {
-	char	*ptr;
-	size_t	len;
+	t_list	*ptr;
 
-	if (s1 && !s2)
-		return (ft_strdup(s1));
-	if (!s1 && s2)
-		return (ft_strdup(s2));
-	if (!s1 && !s2)
-		return (ft_strdup(""));
-	len = (ft_strlen(s1) + ft_strlen(s2)) + 1;
-	ptr = (char *)malloc(len);
+	ptr = (t_list *)malloc(sizeof(t_list));
 	if (!ptr)
 		return (NULL);
-	ft_strlcpy(ptr, s1, len);
-	ft_strlcat(ptr, s2, len);
+	ptr->content = content;
+	ptr->next = NULL;
 	return (ptr);
 }
+
+// int main()
+// {
+// 	t_list *list = ft_lstnew(ft_strdup("node1"));
+// 	printf("%s",list->content);
+// }

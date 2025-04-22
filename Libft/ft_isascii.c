@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 18:03:30 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/13 21:01:30 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/10/22 10:13:06 by hwahmane          #+#    #+#             */
+/*   Updated: 2024/11/07 18:13:45 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s1)
+int	ft_isascii(int c)
 {
-	int		len;
-	char	*ptr;
-
-	len = ft_strlen(s1);
-	ptr = malloc(len + 1);
-	if (!ptr)
-		return (NULL);
-	ft_strlcpy(ptr, s1, len + 1);
-	return (ptr);
+	return ((c >= 0 && c <= 127));
 }
+
+// int	main()
+// {
+// 	printf("%d\n",ft_isascii('@'));
+// 	printf("%d\n",ft_isascii('a'));
+// 	printf("%d\n",ft_isascii(255));
+// }
