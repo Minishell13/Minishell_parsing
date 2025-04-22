@@ -1,6 +1,7 @@
 NAME = minishell
 
-SRCS = minishell.c lexer.c ./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c
+SRCS = minishell.c lexer.c lexer_command.c \
+		./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
