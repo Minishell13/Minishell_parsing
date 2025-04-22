@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:28:09 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/22 16:29:50 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:08:50 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ t_token_type get_token_type(char *str)
 {
     if (str == NULL || *str == '\0')
         return TOKEN_EMPTY;
+    else if (ft_strncmp(str, "(", ft_strlen(str)) == 0)
+        return TOKEN_OPARENTHES;
+    else if (ft_strncmp(str, ")", ft_strlen(str)) == 0)
+        return TOKEN_CPARENTHES;
     else if (ft_strncmp(str, "|", ft_strlen(str)) == 0)
         return TOKEN_PIPE;
     else if (ft_strncmp(str, ">", ft_strlen(str)) == 0)
@@ -30,7 +34,7 @@ t_token_type get_token_type(char *str)
         return  TOKEN_REDIR_APPEND;
     else if (ft_strncmp(str, "<<", ft_strlen(str)) == 0)
         return  TOKEN_HEREDOC;
-    return TOKEN_COMMAND;
+    return TOKEN_WORD;
 }
 
 t_token *create_token(char *value)
