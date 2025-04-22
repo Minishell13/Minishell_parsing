@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:58:45 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/22 17:08:40 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/22 19:12:55 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,16 @@ typedef struct s_token
     struct s_token *next;
 } t_token;
 
-// typedef struct s_ast {
-//     t_token_type type;
-//     char **cmd;                 // Only used for NODE_COMMAND
-//     char *file;                 // Used for redirections
-//     struct s_ast *left;
-//     struct s_ast *right;
-// } t_ast;
+typedef struct s_arr {
+    int size;
+    int used;
+    int elem_size;
+    struct s_arr *arr;
+} t_arr;
+
+typedef struct s_ast {
+    struct s_arr arr;
+} t_ast;
 
 // lexer
 t_token *lexer(char *line);
