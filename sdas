@@ -1,0 +1,13 @@
+cat "t.txt" | grep "h" > out.txt
+
+[
+    cat "t.txt" | grep "h" > out.txt,
+    [
+        >,
+        [   | ---> [cat "asdas", grep "h"]
+            ,filename [NULL]
+        ],
+    ]
+    
+
+]

@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:58:45 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/23 15:32:55 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:06:14 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,24 @@ t_token *create_token(char *value);
 void token_add_back(t_token **head, t_token *new_token);
 
 
+t_ast *parse_complete_command(t_token **tokens);
+t_ast *parse_command_list(t_token **tokens);
+t_ast *parse_compound_command(t_token **tokens);
+t_ast *parse_pipeline(t_token **tokens);
+t_ast *parse_command(t_token **tokens);
+t_ast *parse_subshell(t_token **tokens);
+t_ast *parse_simple_command(t_token **tokens);
+t_ast *parse_redirect_list(t_token **tokens);
+t_ast *parse_io_redirect(t_token **tokens);
+t_ast *parse_word(t_token **tokens);
+
+// In parser.h or before their use in parser.c
+t_ast *create_ast_node(t_gram value);
+void insert_arr(t_arr *arr, void *elem);
+t_arr *merge_arrays(t_arr *arr1, t_arr *arr2);
+t_arr *init_arr(void);
+void free_ast(t_ast *node);
+t_ast *new_ast(t_gram value);
 
 
 #endif
