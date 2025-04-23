@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:58:45 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/22 19:12:55 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/23 15:32:55 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,30 @@ typedef enum s_token_type
     TOKEN_EMPTY,
 } t_token_type;
 
+typedef enum s_gram 
+{
+    GRAM_COMPLETE_COMMAND,
+    GRAM_COMMAND_LIST,
+    GRAM_COMPOUND_COMMAND,
+    GRAM_PIPELINE,
+    GRAM_COMMAND,
+    GRAM_SUBSHELL,
+    GRAM_SIMPLE_COMMAND,
+    GRAM_REDIRECT_LIST,
+    GRAM_IO_REDIRECT,
+    GRAM_WORD,
+    GRAM_OPERATOR_AND,     // &&
+    GRAM_OPERATOR_OR,      // ||
+    GRAM_OPERATOR_PIPE,    // |
+    GRAM_REDIR_IN,         // <
+    GRAM_REDIR_OUT,        // >
+    GRAM_REDIR_APPEND,     // >>
+    GRAM_HEREDOC,          // <<
+    GRAM_FILENAME,         // filename after redirection
+    GRAM_LINEBREAK
+} t_gram;
+
+
 typedef struct s_token 
 {
     t_token_type type;
@@ -56,11 +80,12 @@ typedef struct s_arr {
     int size;
     int used;
     int elem_size;
-    struct s_arr *arr;
+    void *arr;
 } t_arr;
 
 typedef struct s_ast {
-    struct s_arr arr;
+    t_gram  value;
+    t_arr   *array;
 } t_ast;
 
 // lexer
