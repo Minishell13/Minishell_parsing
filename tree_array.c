@@ -6,15 +6,15 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 19:00:51 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/23 16:17:38 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:05:48 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ast *new_ast(t_gram value)
+t_tree *new_ast(t_gram value)
 {
-    t_ast *node = malloc(sizeof(t_ast));
+    t_tree *node = malloc(sizeof(t_tree));
     if (!node)
         return NULL;
     node->value = value;
@@ -36,9 +36,9 @@ t_arr *merge_arrays(t_arr *arr1, t_arr *arr2)
     return merged;
 }
 
-t_ast *create_ast_node(t_gram value)
+t_tree *create_ast_node(t_gram value)
 {
-    t_ast *node = malloc(sizeof(t_ast));
+    t_tree *node = malloc(sizeof(t_tree));
     if (!node)
         return NULL;
     node->value = value;
@@ -57,7 +57,7 @@ void insert_arr(t_arr *arr, void *elem)
     arr->used++;
 }
 
-void free_ast(t_ast *node)
+void free_ast(t_tree *node)
 {
     if (node)
     {
