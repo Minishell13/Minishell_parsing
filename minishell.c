@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:45:00 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/23 16:46:52 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:05:48 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,59 +16,71 @@ const char *get_node_type_name(int type)
 {
     switch (type)
     {
+        case GRAM_REDIRECT_LIST: return "REDIRECT_LIST";
+        case GRAM_IO_REDIRECT: return "GRAM_IO_REDIRECT";
         case GRAM_COMPLETE_COMMAND: return "COMPLETE_COMMAND";
         case GRAM_COMMAND_LIST: return "COMMAND_LIST";
         case GRAM_COMPOUND_COMMAND: return "COMPOUND_COMMAND";
         case GRAM_PIPELINE: return "PIPELINE";
         case GRAM_SIMPLE_COMMAND: return "SIMPLE_COMMAND";
-        case GRAM_REDIRECT_LIST: return "REDIRECT_LIST";
         case GRAM_OPERATOR_AND: return "AND";
         case GRAM_OPERATOR_OR: return "OR";
         // Add more as needed
         default: return "UNKNOWN";
     }
 }
-
-void print_ast_tree(t_ast *node, int indent)
+void print_tree_tree(t_tree *node, int indent)
 {
-    if (!node || !node->array)
-        return;
+    if (!node || !node->array) return;
 
-    for (int i = 0; i < indent; i++)
-        printf("  ");
+    for (int i = 0; i < indent; i++) printf("  ");
     printf("Node type: %s\n", get_node_type_name(node->value));
 
     for (int i = 0; i < node->array->used; i++)
     {
-        void *item = *(void **)((char *)node->array->arr + i * node->array->elem_size);
-        if (!item)
+        void *raw = *(void**)((char*)node->array->arr + i * node->array->elem_size);
+        if (!raw) 
             continue;
 
-        if (node->value == GRAM_SIMPLE_COMMAND || node->value == GRAM_REDIRECT_LIST)
+        if (node->value == GRAM_SIMPLE_COMMAND)
         {
-            char *maybe_str = (char *)item;
-            if (maybe_str)
+            char *s = (char*)raw;
+            // Heuristic: if it begins with a printable character, it's a real word
+            if (s && ft_isprint((unsigned char)s[0]))
             {
-                for (int j = 0; j < indent + 1; j++)
-                    printf("  ");
-                printf("Value: %s\n", maybe_str);
-                continue;
+                for (int j = 0; j < indent+1; j++) printf("  ");
+                printf("Value: %s\n", s);
             }
+            else
+            {
+                // Otherwise it’s an embedded AST (redir, etc.)
+                print_tree_tree((t_tree*)raw, indent+1);
+            }
+            continue;
         }
 
-        // Otherwise, treat it as a child node
-        print_ast_tree((t_ast *)item, indent + 1);
+        if (node->value == GRAM_IO_REDIRECT)
+        {
+            char *s = (char*)raw;
+            if (s && ft_isprint((unsigned char)s[0]))
+            {
+                for (int j = 0; j < indent+1; j++) printf("  ");
+                printf("Value: %s\n", s);
+            }
+            continue;
+        }
+
+        // All other node types are pure AST children
+        print_tree_tree((t_tree*)raw, indent+1);
     }
 }
-
-
 
 
 
 int main(int ac, char **av, char **env)
 {
     t_token *head;
-    t_ast *ast_root;
+    t_tree *ast_root;
     char *line;
 
     (void)ac;
@@ -88,7 +100,7 @@ int main(int ac, char **av, char **env)
         // Optionally, process the AST or print it out (depends on your use case)
         if (ast_root)
         {
-            print_ast_tree(ast_root, 0);
+            print_tree_tree(ast_root, 0);
         }
         else
         {
