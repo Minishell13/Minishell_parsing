@@ -6,82 +6,82 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 19:00:51 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/24 19:05:48 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/25 16:22:48 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_tree *new_ast(t_gram value)
+// create an internal node (no string)
+t_tree	*new_tree_node(t_gram gram)
 {
-    t_tree *node = malloc(sizeof(t_tree));
-    if (!node)
-        return NULL;
-    node->value = value;
-    node->array = init_arr();
-    return node;
+	t_tree	*n;
+
+	n = malloc(sizeof(*n));
+	if (!n)
+		return (NULL);
+	n->gram = gram;
+	n->str = NULL;
+	n->child = NULL;
+	n->sibling = NULL;
+	return (n);
 }
 
-t_arr *merge_arrays(t_arr *arr1, t_arr *arr2)
+// create a leaf node (a WORD or filename)
+t_tree	*new_tree_leaf(t_gram gram, char *s)
 {
-    t_arr *merged = init_arr();
-    // Insert elements of arr1
-    for (int i = 0; i < arr1->used; i++)
-        insert_arr(merged, ((char *)arr1->arr + i * arr1->elem_size));
+	t_tree	*n;
 
-    // Insert elements of arr2
-    for (int i = 0; i < arr2->used; i++)
-        insert_arr(merged, ((char *)arr2->arr + i * arr2->elem_size));
-
-    return merged;
+	n = new_tree_node(gram);
+	if (!n)
+		return (NULL);
+	n->str = strdup(s);
+	return (n);
 }
 
-t_tree *create_ast_node(t_gram value)
+// append `c` as the last child of `parent`
+void	tree_add_child(t_tree *parent, t_tree *c)
 {
-    t_tree *node = malloc(sizeof(t_tree));
-    if (!node)
-        return NULL;
-    node->value = value;
-    node->array = init_arr();
-    return node;
+	t_tree	*it;
+
+	if (!parent || !c)
+		return ;
+	if (!parent->child)
+	{
+		parent->child = c;
+	}
+	else
+	{
+		it = parent->child;
+		while (it->sibling)
+			it = it->sibling;
+		it->sibling = c;
+	}
 }
 
-void insert_arr(t_arr *arr, void *elem)
+// append `sib` as the last sibling of `node`
+void	tree_add_sibling(t_tree *node, t_tree *sib)
 {
-    if (arr->used == arr->size)
+	if (!node || !sib)
+		return ;
+	while (node->sibling)
+		node = node->sibling;
+	node->sibling = sib;
+}
+
+// Append a node to the list
+void append_to_list(t_list **list, t_list *new_node)
+{
+    if (!*list)
     {
-        arr->size *= 2;
-        arr->arr = realloc(arr->arr, arr->size * arr->elem_size);
+        *list = new_node;
     }
-    memcpy((char *)arr->arr + arr->used * arr->elem_size, elem, arr->elem_size);
-    arr->used++;
-}
-
-void free_ast(t_tree *node)
-{
-    if (node)
+    else
     {
-        // Free the elements inside the array
-        if (node->array)
-        {
-            for (int i = 0; i < node->array->used; i++)
-            {
-                // Add custom logic if the array stores more than simple pointers
-            }
-            free(node->array->arr); // Free the dynamic array
-            free(node->array);      // Free the array structure
-        }
-        free(node);  // Free the AST node itself
+        t_list *temp = *list;
+        while (temp->next)
+            temp = temp->next;
+        temp->next = new_node;
     }
 }
 
-
-t_arr *init_arr(void)
-{
-    t_arr *arr = malloc(sizeof(t_arr));
-    arr->size = 10; 
-    arr->used = 0;
-    arr->elem_size = sizeof(void *);  // Adjust this based on the data type you store
-    arr->arr = malloc(arr->size * arr->elem_size);
-    return arr;
-}

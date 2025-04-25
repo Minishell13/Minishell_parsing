@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:45:00 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/24 19:05:48 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/25 16:48:31 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,64 +16,50 @@ const char *get_node_type_name(int type)
 {
     switch (type)
     {
-        case GRAM_REDIRECT_LIST: return "REDIRECT_LIST";
-        case GRAM_IO_REDIRECT: return "GRAM_IO_REDIRECT";
+        case GRAM_REDIRECT_LIST:    return "REDIRECT_LIST";
+        case GRAM_IO_REDIRECT:      return "IO_REDIRECT";
         case GRAM_COMPLETE_COMMAND: return "COMPLETE_COMMAND";
-        case GRAM_COMMAND_LIST: return "COMMAND_LIST";
+        case GRAM_COMMAND_LIST:     return "COMMAND_LIST";
         case GRAM_COMPOUND_COMMAND: return "COMPOUND_COMMAND";
-        case GRAM_PIPELINE: return "PIPELINE";
-        case GRAM_SIMPLE_COMMAND: return "SIMPLE_COMMAND";
-        case GRAM_OPERATOR_AND: return "AND";
-        case GRAM_OPERATOR_OR: return "OR";
-        // Add more as needed
-        default: return "UNKNOWN";
+        case GRAM_PIPELINE:         return "PIPELINE";
+        case GRAM_SIMPLE_COMMAND:   return "SIMPLE_COMMAND";
+        case GRAM_OPERATOR_AND:     return "AND";
+        case GRAM_OPERATOR_OR:      return "OR";
+        case GRAM_REDIR_IN:         return "REDIR_IN";
+        case GRAM_REDIR_OUT:        return "REDIR_OUT";
+        case GRAM_REDIR_APPEND:     return "REDIR_APPEND";
+        case GRAM_HEREDOC:          return "HEREDOC";
+        case GRAM_FILENAME:         return "FILENAME";
+        case GRAM_WORD_ARRAY:       return "WORD_ARRAY";
+        case GRAM_SUBSHELL:         return "SUBSHELL";
+        default:                    return "UNKNOWN";
     }
 }
-void print_tree_tree(t_tree *node, int indent)
+void print_tree(t_tree *node, int indent)
 {
-    if (!node || !node->array) return;
+    if (!node)
+        return;
 
-    for (int i = 0; i < indent; i++) printf("  ");
-    printf("Node type: %s\n", get_node_type_name(node->value));
-
-    for (int i = 0; i < node->array->used; i++)
+    printf("%*s%s", indent * 2, "", get_node_type_name(node->gram));
+    if (node->gram == GRAM_SIMPLE_COMMAND && node->words)
     {
-        void *raw = *(void**)((char*)node->array->arr + i * node->array->elem_size);
-        if (!raw) 
-            continue;
-
-        if (node->value == GRAM_SIMPLE_COMMAND)
+        char **words = node->words;
+        printf(": [");
+        for (int i = 0; words[i]; i++)
         {
-            char *s = (char*)raw;
-            // Heuristic: if it begins with a printable character, it's a real word
-            if (s && ft_isprint((unsigned char)s[0]))
-            {
-                for (int j = 0; j < indent+1; j++) printf("  ");
-                printf("Value: %s\n", s);
-            }
-            else
-            {
-                // Otherwise it’s an embedded AST (redir, etc.)
-                print_tree_tree((t_tree*)raw, indent+1);
-            }
-            continue;
+            printf("\"%s\"", words[i]);
+            if (words[i + 1])
+                printf(", ");
         }
-
-        if (node->value == GRAM_IO_REDIRECT)
-        {
-            char *s = (char*)raw;
-            if (s && ft_isprint((unsigned char)s[0]))
-            {
-                for (int j = 0; j < indent+1; j++) printf("  ");
-                printf("Value: %s\n", s);
-            }
-            continue;
-        }
-
-        // All other node types are pure AST children
-        print_tree_tree((t_tree*)raw, indent+1);
+        printf("]");
     }
+    printf("\n");
+
+    print_tree(node->child, indent + 1);
+    print_tree(node->sibling, indent);
 }
+
+
 
 
 
@@ -100,15 +86,13 @@ int main(int ac, char **av, char **env)
         // Optionally, process the AST or print it out (depends on your use case)
         if (ast_root)
         {
-            print_tree_tree(ast_root, 0);
+            print_tree(ast_root, 0);
         }
         else
         {
             printf("Error parsing tokens\n");
         }
         
-        // Free the allocated memory for the tokens and AST
-        free_ast(ast_root); // Implement a function to free the AST
         
         // Read the next line
         line = get_next_line(0);
