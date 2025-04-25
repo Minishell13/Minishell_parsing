@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 19:00:51 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/25 16:22:48 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:18:51 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,19 @@ void	tree_add_sibling(t_tree *node, t_tree *sib)
 }
 
 // Append a node to the list
-void append_to_list(t_list **list, t_list *new_node)
+void	append_to_list(t_list **list, t_list *new_node)
 {
-    if (!*list)
-    {
-        *list = new_node;
-    }
-    else
-    {
-        t_list *temp = *list;
-        while (temp->next)
-            temp = temp->next;
-        temp->next = new_node;
-    }
-}
+	t_list	*temp;
 
+	if (!*list)
+	{
+		*list = new_node;
+	}
+	else
+	{
+		temp = *list;
+		while (temp->next)
+			temp = temp->next;
+		temp->next = new_node;
+	}
+}

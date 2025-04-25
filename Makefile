@@ -2,7 +2,7 @@ NAME = minishell
 
 SRCS = minishell.c lexer.c lexer_command.c \
 		./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c \
-		parser.c tree_array.c
+		parser.c tree_array.c parsing_command2.c parsing_command.c
 
 OBJS = $(SRCS:.c=.o)
 
