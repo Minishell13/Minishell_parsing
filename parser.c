@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:46:40 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/25 17:56:23 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:29:34 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_tree	*parse_compound_command(t_token **tokens)
 		*tokens = (*tokens)->next;
 		right = parse_pipeline(tokens);
 		if (!right)
-			return (NULL);// TODO: free left if needed
+			return (NULL);// TODO: free left
 		if (op == TOKEN_AND)
 			node = new_tree_node(GRAM_OPERATOR_AND);
 		else
