@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:45:00 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/25 17:51:58 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:27:07 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,35 +66,26 @@ void print_tree(t_tree *node, int indent)
 int main(int ac, char **av, char **env)
 {
     t_token *head;
-    t_tree *ast_root;
+    t_tree *tree;
     char *line;
 
     (void)ac;
     (void)av;
     (void)env;
     
-    line = get_next_line(0);  // Reading input line by line
-    
+    line = get_next_line(0);
     while (line)
     {
-        // Tokenize the input line
         head = lexer(line);
-                
-        // Parse the tokens into an AST (assuming `parse_complete_command` is the main entry point)
-        ast_root = parse_complete_command(&head);  // head now points to the list of tokens
-        
-        // Optionally, process the AST or print it out (depends on your use case)
-        if (ast_root)
+        tree = parse_complete_command(&head);
+        if (tree)
         {
-            print_tree(ast_root, 0);
+            print_tree(tree, 0);
         }
         else
         {
             printf("Error parsing tokens\n");
         }
-        
-        
-        // Read the next line
         line = get_next_line(0);
     }
     
