@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:44:16 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/22 18:40:43 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:08:41 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,30 +62,6 @@ t_tree	*parse_redirect_list(t_token **tokens)
 	return (list);
 }
 
-// parse a simple_command : WORD* redirect_list?
-// t_tree	*parse_simple_command(t_token **tokens)
-// {
-// 	t_tree	*cmd;
-// 	t_tree	*rlist;
-// 	t_list	*words;
-// 	int		count;
-
-// 	cmd = new_tree_node(GRAM_SIMPLE_COMMAND);
-// 	if (!cmd)
-// 		return (NULL);
-// 	words = collect_words(tokens);
-// 	count = count_words(words);
-// 	cmd->words = malloc(sizeof(char *) * (count + 1));
-// 	if (!cmd->words || !fill_words_array(cmd->words, words))
-// 		return (NULL);
-// 	rlist = parse_redirect_list(tokens);
-// 	if (rlist)
-// 		tree_add_child(cmd, rlist);
-// 	if (!cmd->words[0])
-// 		return (NULL);
-// 	return (cmd);
-// }
-
 t_tree *parse_simple_command(t_token **tokens)
 {
     t_tree *cmd;
@@ -127,10 +103,8 @@ t_tree *parse_simple_command(t_token **tokens)
                 return NULL;
         }
     }
-
     if (!words)
         return NULL;
-
     int count = count_words(words);
     cmd->words = malloc(sizeof(char *) * (count + 1));
     if (!cmd->words || !fill_words_array(cmd->words, words))
