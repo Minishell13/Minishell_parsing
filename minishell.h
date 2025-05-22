@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:58:45 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/22 18:28:34 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/22 18:30:25 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void				parse_subshell_redirects(t_token **tokens, t_tree *node);
 void				skip_empty_tokens(t_token **tokens);
 int					is_redirect_token(t_token *token);
 t_tree				*create_redirect_node(t_token_type type, char *op,
-						char *file);
+						char *file, t_tree *list);
 int					handle_redirection(t_token **tokens, t_tree *list);
 
 #endif
