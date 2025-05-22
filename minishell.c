@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:45:00 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/25 18:27:07 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:53:16 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void print_tree(t_tree *node, int indent)
         return;
 
     printf("%*s%s", indent * 2, "", get_node_type_name(node->gram));
+
     if (node->gram == GRAM_SIMPLE_COMMAND && node->words)
     {
         char **words = node->words;
@@ -53,14 +54,17 @@ void print_tree(t_tree *node, int indent)
         }
         printf("]");
     }
+    else if (node->gram == GRAM_FILENAME)
+    {
+        // Assuming filename is stored in `node->filename`
+        printf(": \"%s\"", node->str);
+    }
+
     printf("\n");
 
     print_tree(node->child, indent + 1);
     print_tree(node->sibling, indent);
 }
-
-
-
 
 
 int main(int ac, char **av, char **env)
