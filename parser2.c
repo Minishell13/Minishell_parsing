@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:44:16 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/22 17:28:09 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/22 18:40:43 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,25 +63,82 @@ t_tree	*parse_redirect_list(t_token **tokens)
 }
 
 // parse a simple_command : WORD* redirect_list?
-t_tree	*parse_simple_command(t_token **tokens)
-{
-	t_tree	*cmd;
-	t_tree	*rlist;
-	t_list	*words;
-	int		count;
+// t_tree	*parse_simple_command(t_token **tokens)
+// {
+// 	t_tree	*cmd;
+// 	t_tree	*rlist;
+// 	t_list	*words;
+// 	int		count;
 
-	cmd = new_tree_node(GRAM_SIMPLE_COMMAND);
-	if (!cmd)
-		return (NULL);
-	words = collect_words(tokens);
-	count = count_words(words);
-	cmd->words = malloc(sizeof(char *) * (count + 1));
-	if (!cmd->words || !fill_words_array(cmd->words, words))
-		return (NULL);
-	rlist = parse_redirect_list(tokens);
-	if (rlist)
-		tree_add_child(cmd, rlist);
-	if (!cmd->words[0])
-		return (NULL);
-	return (cmd);
+// 	cmd = new_tree_node(GRAM_SIMPLE_COMMAND);
+// 	if (!cmd)
+// 		return (NULL);
+// 	words = collect_words(tokens);
+// 	count = count_words(words);
+// 	cmd->words = malloc(sizeof(char *) * (count + 1));
+// 	if (!cmd->words || !fill_words_array(cmd->words, words))
+// 		return (NULL);
+// 	rlist = parse_redirect_list(tokens);
+// 	if (rlist)
+// 		tree_add_child(cmd, rlist);
+// 	if (!cmd->words[0])
+// 		return (NULL);
+// 	return (cmd);
+// }
+
+t_tree *parse_simple_command(t_token **tokens)
+{
+    t_tree *cmd;
+    t_tree *rlist = NULL;
+    t_list *words = NULL;
+    t_list *last_word = NULL;
+
+    cmd = new_tree_node(GRAM_SIMPLE_COMMAND);
+    if (!cmd)
+        return NULL;
+
+    while (*tokens && ((*tokens)->type == TOKEN_WORD || is_redirect_token(*tokens)))
+    {
+        if ((*tokens)->type == TOKEN_WORD)
+        {
+            t_list *new_word = malloc(sizeof(t_list));
+            if (!new_word)
+                return NULL;
+            new_word->token = *tokens;
+            new_word->next = NULL;
+
+            if (!words)
+                words = new_word;
+            else
+                last_word->next = new_word;
+            last_word = new_word;
+
+            *tokens = (*tokens)->next;
+        }
+        else if (is_redirect_token(*tokens))
+        {
+            if (!rlist)
+            {
+                rlist = new_tree_node(GRAM_REDIRECT_LIST);
+                if (!rlist)
+                    return NULL;
+            }
+            if (!handle_redirection(tokens, rlist))
+                return NULL;
+        }
+    }
+
+    if (!words)
+        return NULL;
+
+    int count = count_words(words);
+    cmd->words = malloc(sizeof(char *) * (count + 1));
+    if (!cmd->words || !fill_words_array(cmd->words, words))
+        return NULL;
+
+    if (rlist)
+        tree_add_child(cmd, rlist);
+
+    return cmd;
 }
+
