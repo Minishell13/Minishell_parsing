@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:45:00 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/22 15:53:16 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/22 18:28:27 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ const char *get_node_type_name(int type)
         case GRAM_COMPLETE_COMMAND: return "COMPLETE_COMMAND";
         case GRAM_COMMAND_LIST:     return "COMMAND_LIST";
         case GRAM_COMPOUND_COMMAND: return "COMPOUND_COMMAND";
-        case GRAM_PIPELINE:         return "PIPELINE";
+        case GRAM_PIPE:             return "PIPE";
         case GRAM_SIMPLE_COMMAND:   return "SIMPLE_COMMAND";
         case GRAM_OPERATOR_AND:     return "AND";
         case GRAM_OPERATOR_OR:      return "OR";
@@ -55,10 +55,7 @@ void print_tree(t_tree *node, int indent)
         printf("]");
     }
     else if (node->gram == GRAM_FILENAME)
-    {
-        // Assuming filename is stored in `node->filename`
         printf(": \"%s\"", node->str);
-    }
 
     printf("\n");
 
@@ -88,7 +85,7 @@ int main(int ac, char **av, char **env)
         }
         else
         {
-            printf("Error parsing tokens\n");
+            printf("\n");
         }
         line = get_next_line(0);
     }

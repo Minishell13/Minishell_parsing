@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:58:45 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/25 17:54:14 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/22 18:28:34 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef enum s_gram
 	GRAM_COMPLETE_COMMAND,
 	GRAM_COMMAND_LIST,
 	GRAM_COMPOUND_COMMAND,
-	GRAM_PIPELINE,
+	GRAM_PIPE,
 	GRAM_COMMAND,
 	GRAM_SUBSHELL,
 	GRAM_SIMPLE_COMMAND,

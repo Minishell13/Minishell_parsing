@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wahmane <wahmane@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:00:23 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/30 17:27:29 by wahmane          ###   ########.fr       */
+/*   Updated: 2025/05/22 16:57:51 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,16 @@ int	is_operator_char(char c)
 	return (c == '|' || c == '<' || c == '>' || c == '(' || c == ')');
 }
 
-// Handle operators like &&, ||, >>
-int	operators(int i, char *line, t_token **head)
+int operators(int i, char *line, t_token **head)
 {
-	int		start;
-	char	*word;
+	int start;
+	char *word;
 
 	if (line[i] == '\0')
 		return (i);
 	start = i;
-	if (line[i + 1] && line[i + 1] == line[i] && (line[i] != '('
-			|| line[i] != ')'))
+	if (line[i + 1] && line[i + 1] == line[i]
+		&& !(line[i] == '(' || line[i] == ')'))
 		i++;
 	i++;
 	word = ft_substr(line, start, i - start);

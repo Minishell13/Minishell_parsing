@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:44:16 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/18 16:53:31 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:28:09 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,26 @@ t_tree	*parse_subshell(t_token **tokens)
 {
 	t_tree	*node;
 	t_tree	*inner;
+	t_token *after_paren;
 
 	if (!consume_token_type(tokens, TOKEN_OPARENTHES))
 		return (NULL);
 	skip_empty_tokens(tokens);
 	inner = parse_command_list(tokens);
 	if (!inner)
-		return (NULL);
+		return (printf("syntax error: empty subshell or invalid content\n"), NULL);
 	skip_empty_tokens(tokens);
+	if (inner->sibling)
+		return (printf("syntax error: multiple commands in subshell without operator\n"), NULL);
 	if (!consume_token_type(tokens, TOKEN_CPARENTHES))
 		return (printf("syntax error: expected ')'\n"), NULL);
+	after_paren = *tokens;
+	skip_empty_tokens(&after_paren);
+	if (after_paren && after_paren->type == TOKEN_OPARENTHES)
+	{
+		printf("syntax error: unexpected '('\n");
+		return NULL;
+	}
 	node = new_tree_node(GRAM_SUBSHELL);
 	if (!node)
 		return (NULL);
