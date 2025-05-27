@@ -1,6 +1,5 @@
 ## Lexer
-- "sadsad ---> error
-- 'sadsad ---> error
--3sila
+- "sadsad ---> error --->done
+- 'sadsad ---> error --->done
 ## Parser
 - ls (-l) ---> error

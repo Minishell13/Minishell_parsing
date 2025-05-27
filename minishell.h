@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:58:45 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/22 18:30:25 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:16:00 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ t_token				*lexer(char *line);
 t_token				*create_token(char *value);
 void				token_add_back(t_token **head, t_token *new_token);
 t_token_type		get_token_type(char *str);
+int					read_quoted_word(int i, char *line, t_token **head);
+t_bool				has_unclosed_quotes(char *line);
 
 // tree_array
 t_tree				*new_tree_node(t_gram gram);

@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 14:03:17 by hwahmane          #+#    #+#             */
-/*   Updated: 2024/11/06 16:36:07 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:09:44 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	ft_strlcpy(ptr, &s[start], substr_len + 1);
 	return ((char *)ptr);
 }
-
-// int main()
-// {
-// 	char s[] = "hello world";
-// 	char *newS = ft_substr(s, 0 , 5);
-// 	int i = 0;
-// 	while (newS[i])
-// 		printf("%c", newS[i++]);
-// }

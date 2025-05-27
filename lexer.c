@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:00:23 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/22 16:57:51 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:15:05 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	read_word(int i, char *line, t_token **head)
 	int		start;
 	char	*word;
 
+	if (line[i] == '\'' || line[i] == '"')
+		return read_quoted_word(i, line, head);
 	if (line[i] == '&' && line[i + 1] == line[i])
 	{
 		i = operators(i, line, head);
@@ -73,6 +75,8 @@ t_token	*lexer(char *line)
 	int		i;
 	t_token	*head;
 
+	if (has_unclosed_quotes(line))
+		return NULL;
 	head = NULL;
 	i = 0;
 	while (line[i])

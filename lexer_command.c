@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:28:09 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/04/22 17:08:50 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:15:39 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,51 @@ void	token_add_back(t_token **head, t_token *new_token)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new_token;
+}
+
+
+t_bool	has_unclosed_quotes(char *line)
+{
+	char quote = 0;
+
+	while (*line)
+	{
+		if (*line == '\'' || *line == '"')
+		{
+			if (!quote)
+				quote = *line;
+			else if (quote == *line)
+				quote = 0;
+		}
+		line++;
+	}
+	if (quote)
+	{
+		fprintf(stderr, "syntax error: unclosed quote `%c`", quote);
+		return true;
+	}
+	return false;
+}
+
+int	read_quoted_word(int i, char *line, t_token **head)
+{
+	int		start = i;
+	char	quote = line[i];
+	char	*word;
+
+	i++;
+	while (line[i] && line[i] != quote)
+		i++;
+	if (line[i] != quote)
+	{
+		fprintf(stderr, "minishell: syntax error: unclosed quote `%c`\n", quote);
+		return (-1);
+	}
+	i++;
+	word = ft_substr(line, start, i - start);
+	if (!word)
+		return (-1);
+	token_add_back(head, create_token(word));
+	free(word);
+	return (i);
 }
