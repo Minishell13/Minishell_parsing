@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:28:52 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/22 17:29:00 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/27 20:06:23 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,16 @@ int	consume_token_type(t_token **tokens, t_token_type type)
 	return (1);
 }
 
-void	parse_subshell_redirects(t_token **tokens, t_tree *node)
-{
-	t_tree	*rlist;
+// void	parse_subshell_redirects(t_token **tokens, t_tree *node)
+// {
+// 	t_tree	*rlist;
 
-	while (1)
-	{
-		skip_empty_tokens(tokens);
-		rlist = parse_redirect_list(tokens);
-		if (!rlist)
-			break ;
-		tree_add_child(node, rlist);
-	}
-}
+// 	while (1)
+// 	{
+// 		skip_empty_tokens(tokens);
+// 		rlist = parse_redirect_list(tokens);
+// 		if (!rlist)
+// 			break ;
+// 		tree_add_child(node, rlist);
+// 	}
+// }

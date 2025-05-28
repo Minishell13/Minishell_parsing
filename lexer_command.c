@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:28:09 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/27 18:15:39 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:52:14 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	read_quoted_word(int i, char *line, t_token **head)
 		i++;
 	if (line[i] != quote)
 	{
-		fprintf(stderr, "minishell: syntax error: unclosed quote `%c`\n", quote);
+		fprintf(stderr, "syntax error: unclosed quote `%c`\n", quote);
 		return (-1);
 	}
 	i++;

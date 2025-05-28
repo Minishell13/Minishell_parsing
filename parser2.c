@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:44:16 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/27 17:45:11 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:04:46 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,27 @@ t_tree	*parse_subshell(t_token **tokens)
 	if (!node)
 		return (NULL);
 	tree_add_child(node, inner);
-	parse_subshell_redirects(tokens, node);
+	// parse_subshell_redirects(tokens, node);
 	return (node);
 }
 
 // parse a sequence of IO_REDIRECT → build a REDIRECT_LIST
-t_tree	*parse_redirect_list(t_token **tokens)
-{
-	t_tree	*list;
+// t_tree	*parse_redirect_list(t_token **tokens)
+// {
+// 	t_tree	*list;
 
-	list = new_tree_node(GRAM_REDIRECT_LIST);
-	if (!list)
-		return (NULL);
-	while (*tokens && is_redirect_token(*tokens))
-	{
-		if (!handle_redirection(tokens, list))
-			return (NULL);
-	}
-	if (!list->child)
-		return (free(list), NULL);
-	return (list);
-}
+// 	list = new_tree_node(GRAM_REDIRECT_LIST);
+// 	if (!list)
+// 		return (NULL);
+// 	while (*tokens && is_redirect_token(*tokens))
+// 	{
+// 		if (!handle_redirection(tokens, list))
+// 			return (NULL);
+// 	}
+// 	if (!list->child)
+// 		return (free(list), NULL);
+// 	return (list);
+// }
 
 t_tree *parse_simple_command(t_token **tokens)
 {
@@ -93,21 +93,21 @@ t_tree *parse_simple_command(t_token **tokens)
         }
         else if (is_redirect_token(*tokens))
         {
-            if (!rlist)
-            {
-                rlist = new_tree_node(GRAM_REDIRECT_LIST);
-                if (!rlist)
-                    return NULL;
-            }
-            if (!handle_redirection(tokens, rlist))
+            // if (!rlist)
+            // {
+            //     rlist = new_tree_node(GRAM_REDIRECT_LIST);
+            //     if (!rlist)
+            //         return NULL;
+            // }
+            if (!handle_redirection(tokens, cmd))
                 return NULL;
         }
     }
     if (!words)
         return NULL;
     int count = count_words(words);
-    cmd->words = malloc(sizeof(char *) * (count + 1));
-    if (!cmd->words || !fill_words_array(cmd->words, words))
+    cmd->data.args = malloc(sizeof(char *) * (count + 1));
+    if (!cmd->data.args || !fill_words_array(cmd->data.args, words))
         return NULL;
 
     if (rlist)

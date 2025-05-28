@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:36:09 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/22 18:33:49 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:24:46 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,37 +25,33 @@ int	is_redirect_token(t_token *token)
 		|| token->type == TOKEN_REDIR_APPEND || token->type == TOKEN_HEREDOC);
 }
 
-t_tree	*create_redirect_node(t_token_type type, char *op, char *file, t_tree *list)
+t_tree	*create_redirect_node(t_token_type type, char *file, t_tree *list)
 {
 	t_tree	*op_node;
-	t_tree	*file_node;
 
 	if (!list)
 		return (NULL);
-	op_node = new_tree_leaf(GRAM_REDIR_IN + (type - TOKEN_REDIR_IN), op);
-	file_node = new_tree_leaf(GRAM_FILENAME, file);
-	if (!op_node || !file_node)
+	op_node = new_tree_leaf(GRAM_REDIR_IN + (type - TOKEN_REDIR_IN), file);
+	// file_node = new_tree_leaf(GRAM_FILENAME, file);
+	if (!op_node)
 		return (NULL);
 	tree_add_child(list, op_node);
-	tree_add_child(op_node, file_node);
 	return (list);
 }
 
 int	handle_redirection(t_token **tokens, t_tree *list)
 {
 	t_token_type	type;
-	char			*op;
 	char			*file;
 
 	type = (*tokens)->type;
-	op = (*tokens)->value;
 	*tokens = (*tokens)->next;
 	skip_empty_tokens(tokens);
 	if (!*tokens || (*tokens)->type != TOKEN_WORD)
 		return (0);
 	file = (*tokens)->value;
 	*tokens = (*tokens)->next;
-	if (!create_redirect_node(type, op, file, list))
+	if (!create_redirect_node(type, file, list))
 		return (0);
 	// tree_add_child(list, redir);
 	return (1);

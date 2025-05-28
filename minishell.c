@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:45:00 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/22 18:28:27 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:22:01 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ const char *get_node_type_name(int type)
 {
     switch (type)
     {
-        case GRAM_REDIRECT_LIST:    return "REDIRECT_LIST";
-        case GRAM_IO_REDIRECT:      return "IO_REDIRECT";
         case GRAM_COMPLETE_COMMAND: return "COMPLETE_COMMAND";
         case GRAM_COMMAND_LIST:     return "COMMAND_LIST";
         case GRAM_COMPOUND_COMMAND: return "COMPOUND_COMMAND";
@@ -42,9 +40,9 @@ void print_tree(t_tree *node, int indent)
 
     printf("%*s%s", indent * 2, "", get_node_type_name(node->gram));
 
-    if (node->gram == GRAM_SIMPLE_COMMAND && node->words)
+    if (node->gram == GRAM_SIMPLE_COMMAND && node->data.args)
     {
-        char **words = node->words;
+        char **words = node->data.args;
         printf(": [");
         for (int i = 0; words[i]; i++)
         {
@@ -54,8 +52,9 @@ void print_tree(t_tree *node, int indent)
         }
         printf("]");
     }
-    else if (node->gram == GRAM_FILENAME)
-        printf(": \"%s\"", node->str);
+    else if (node->gram == GRAM_HEREDOC || node->gram == GRAM_REDIR_IN || node->gram == GRAM_REDIR_OUT || node->gram == GRAM_REDIR_APPEND)
+        printf(": \"%s\" , %u", node->data.redir.file, node->data.redir.expanded);
+        
 
     printf("\n");
 

@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:58:45 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/27 18:16:00 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:21:45 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ typedef enum s_gram
 	GRAM_COMMAND,
 	GRAM_SUBSHELL,
 	GRAM_SIMPLE_COMMAND,
-	GRAM_REDIRECT_LIST,
-	GRAM_IO_REDIRECT,
 	GRAM_WORD_ARRAY,
 	GRAM_OPERATOR_AND,// &&
 	GRAM_OPERATOR_OR,// ||
@@ -89,11 +87,21 @@ typedef struct s_arr
 	void			*arr;
 }					t_arr;
 
+
+typedef struct	s_redir
+{
+	char	*file;
+	t_bool	expanded;
+}				t_redir;
+
 typedef struct s_tree
 {
-	t_gram			gram;// grammar node type
-	char			*str;// only non-NULL for WORD / filename leaves
-	char			**words;
+	t_gram			gram;
+	union
+	{
+		char	**args;
+		t_redir	redir;
+	}	data;
 	struct s_tree	*child;
 	struct s_tree	*sibling;
 }					t_tree;
@@ -140,7 +148,7 @@ void				parse_subshell_redirects(t_token **tokens, t_tree *node);
 // parsing_command2
 void				skip_empty_tokens(t_token **tokens);
 int					is_redirect_token(t_token *token);
-t_tree				*create_redirect_node(t_token_type type, char *op,
+t_tree				*create_redirect_node(t_token_type type,
 						char *file, t_tree *list);
 int					handle_redirection(t_token **tokens, t_tree *list);
 
