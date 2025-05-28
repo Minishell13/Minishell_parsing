@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:44:16 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/28 13:04:46 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:27:42 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_tree	*parse_subshell(t_token **tokens)
 
 	if (!consume_token_type(tokens, TOKEN_OPARENTHES))
 		return (NULL);
-	skip_empty_tokens(tokens);
+    skip_empty_tokens(tokens);
 	inner = parse_command_list(tokens);
 	if (!inner)
 		return (printf("syntax error: empty subshell or invalid content\n"), NULL);
@@ -40,39 +40,33 @@ t_tree	*parse_subshell(t_token **tokens)
 	if (!node)
 		return (NULL);
 	tree_add_child(node, inner);
-	// parse_subshell_redirects(tokens, node);
 	return (node);
 }
 
-// parse a sequence of IO_REDIRECT → build a REDIRECT_LIST
-// t_tree	*parse_redirect_list(t_token **tokens)
-// {
-// 	t_tree	*list;
-
-// 	list = new_tree_node(GRAM_REDIRECT_LIST);
-// 	if (!list)
-// 		return (NULL);
-// 	while (*tokens && is_redirect_token(*tokens))
-// 	{
-// 		if (!handle_redirection(tokens, list))
-// 			return (NULL);
-// 	}
-// 	if (!list->child)
-// 		return (free(list), NULL);
-// 	return (list);
-// }
 
 t_tree *parse_simple_command(t_token **tokens)
 {
+    t_bool flag;
     t_tree *cmd;
-    t_tree *rlist = NULL;
-    t_list *words = NULL;
-    t_list *last_word = NULL;
+    t_tree *rlist;
+    t_list *words;
+    t_list *last_word;
+    int count;
 
-    cmd = new_tree_node(GRAM_SIMPLE_COMMAND);
+    words = NULL;
+    rlist = NULL;
+    last_word = NULL;
+    flag = true;
+    cmd = NULL;
+    if ((*tokens)->type == TOKEN_WORD)
+        cmd = new_tree_node(GRAM_SIMPLE_COMMAND);
+    else if ((*tokens)->type == TOKEN_REDIR_IN || (*tokens)->type == TOKEN_REDIR_OUT || (*tokens)->type == TOKEN_HEREDOC || (*tokens)->type == TOKEN_REDIR_APPEND)
+    {
+        cmd = new_tree_node(GRAM_IO_REDIRECT);
+        flag = false;
+    }
     if (!cmd)
         return NULL;
-
     while (*tokens && ((*tokens)->type == TOKEN_WORD || is_redirect_token(*tokens)))
     {
         if ((*tokens)->type == TOKEN_WORD)
@@ -93,26 +87,42 @@ t_tree *parse_simple_command(t_token **tokens)
         }
         else if (is_redirect_token(*tokens))
         {
-            // if (!rlist)
-            // {
-            //     rlist = new_tree_node(GRAM_REDIRECT_LIST);
-            //     if (!rlist)
-            //         return NULL;
-            // }
-            if (!handle_redirection(tokens, cmd))
+            if (flag && !rlist)
+            {
+                rlist = new_tree_node(GRAM_IO_REDIRECT);
+                if (!rlist)
+                    return NULL;
+            }
+            if (flag)
+            {
+                if (!handle_redirection(tokens, rlist))
+                    return NULL;
+            }
+            else
+                if (!handle_redirection(tokens, cmd))
                 return NULL;
         }
     }
-    if (!words)
+    if (cmd && *tokens && ((*tokens)->type == TOKEN_OPARENTHES))
+    {
+        skip_empty_tokens(tokens);
+        if ((*tokens)->next)
+            printf("syntax error: near unexpected token `%s'",(*tokens)->next->value);
+        else
+            parse_subshell(tokens);
         return NULL;
-    int count = count_words(words);
-    cmd->data.args = malloc(sizeof(char *) * (count + 1));
-    if (!cmd->data.args || !fill_words_array(cmd->data.args, words))
-        return NULL;
-
-    if (rlist)
+    }
+    if (flag)
+    {
+        if (!words)
+            return NULL;
+        count = count_words(words);
+        cmd->data.args = malloc(sizeof(char *) * (count + 1));
+        if (!cmd->data.args || !fill_words_array(cmd->data.args, words))
+            return NULL;
+    }
+    if (flag)
         tree_add_child(cmd, rlist);
-
     return cmd;
 }
 

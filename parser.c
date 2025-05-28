@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:46:40 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/22 18:18:30 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:04:58 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ t_tree	*parse_command(t_token **tokens)
 {
 	if (!tokens || !*tokens)
 		return (NULL);
-	if (*tokens && (*tokens)->type == TOKEN_OPARENTHES)
+	if (*tokens && ((*tokens)->type == TOKEN_OPARENTHES 
+        || (*tokens)->type == TOKEN_CPARENTHES))
 		return (parse_subshell(tokens));
 	return (parse_simple_command(tokens));
 }
@@ -29,7 +30,7 @@ t_tree *parse_pipeline(t_token **tokens)
     t_tree *right;
     t_tree *pipe;
 
-    left = parse_command(tokens);
+    left = parse_command(tokens);        
     if (!left)
         return NULL;
     while (*tokens && (*tokens)->type == TOKEN_PIPE)
@@ -93,6 +94,7 @@ t_tree	*parse_command_list(t_token **tokens)
 	t_tree	*head;
 	t_tree	*cur;
 	t_tree	*next;
+
 
 	head = parse_compound_command(tokens);
 	if (!head)

@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:36:09 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/28 13:24:46 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:41:07 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // ------------------- parse_redirect_list functions
 void	skip_empty_tokens(t_token **tokens)
 {
-	while (*tokens && (*tokens)->type == TOKEN_EMPTY)
+	while (*tokens && (*tokens)->next && (*tokens)->type == TOKEN_EMPTY)
 		*tokens = (*tokens)->next;
 }
 
@@ -48,11 +48,13 @@ int	handle_redirection(t_token **tokens, t_tree *list)
 	*tokens = (*tokens)->next;
 	skip_empty_tokens(tokens);
 	if (!*tokens || (*tokens)->type != TOKEN_WORD)
+	{
+		printf("syntax error near unexpected token `newline'");
 		return (0);
+	}
 	file = (*tokens)->value;
 	*tokens = (*tokens)->next;
 	if (!create_redirect_node(type, file, list))
 		return (0);
-	// tree_add_child(list, redir);
 	return (1);
 }

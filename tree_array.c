@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 19:00:51 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/28 13:35:29 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:59:37 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_tree	*new_tree_node(t_gram gram)
 	n->data.args = NULL;
 	n->data.redir.file = NULL;
 	n->data.redir.expanded = false;
-
 	return (n);
 }
 
@@ -40,7 +39,9 @@ t_tree	*new_tree_leaf(t_gram gram, char *s)
 		return (NULL);
 	n->data.redir.file = strdup(s);
 	if (gram == GRAM_HEREDOC && (n->data.redir.file[0] != '"'
-		&& n->data.redir.file[0] != '\''))
+			&& n->data.redir.file[0] != '\'')
+		&& (n->data.redir.file[ft_strlen(n->data.redir.file) - 1] != '"'
+			&& n->data.redir.file[ft_strlen(n->data.redir.file) - 1] != '\''))
 		n->data.redir.expanded = true;
 	return (n);
 }

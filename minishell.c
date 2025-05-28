@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:45:00 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/28 13:22:01 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:14:19 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ const char *get_node_type_name(int type)
     {
         case GRAM_COMPLETE_COMMAND: return "COMPLETE_COMMAND";
         case GRAM_COMMAND_LIST:     return "COMMAND_LIST";
+        case GRAM_IO_REDIRECT:     return "GRAM_IO_REDIRECT";
         case GRAM_COMPOUND_COMMAND: return "COMPOUND_COMMAND";
         case GRAM_PIPE:             return "PIPE";
         case GRAM_SIMPLE_COMMAND:   return "SIMPLE_COMMAND";

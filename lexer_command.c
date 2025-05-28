@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:28:09 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/27 19:52:14 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:04:48 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,11 @@ t_bool	has_unclosed_quotes(char *line)
 	return false;
 }
 
-int	read_quoted_word(int i, char *line, t_token **head)
+int	read_quoted_word(int i, char *line)
 {
-	int		start = i;
-	char	quote = line[i];
-	char	*word;
+	char	quote;
 
+	quote = line[i];
 	i++;
 	while (line[i] && line[i] != quote)
 		i++;
@@ -104,10 +103,5 @@ int	read_quoted_word(int i, char *line, t_token **head)
 		return (-1);
 	}
 	i++;
-	word = ft_substr(line, start, i - start);
-	if (!word)
-		return (-1);
-	token_add_back(head, create_token(word));
-	free(word);
 	return (i);
 }

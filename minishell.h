@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:58:45 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/28 13:21:45 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:05:21 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef enum s_gram
 	GRAM_SUBSHELL,
 	GRAM_SIMPLE_COMMAND,
 	GRAM_WORD_ARRAY,
+	GRAM_IO_REDIRECT,
 	GRAM_OPERATOR_AND,// &&
 	GRAM_OPERATOR_OR,// ||
 	GRAM_OPERATOR_PIPE,// |
@@ -116,7 +117,7 @@ t_token				*lexer(char *line);
 t_token				*create_token(char *value);
 void				token_add_back(t_token **head, t_token *new_token);
 t_token_type		get_token_type(char *str);
-int					read_quoted_word(int i, char *line, t_token **head);
+int					read_quoted_word(int i, char *line);
 t_bool				has_unclosed_quotes(char *line);
 
 // tree_array
