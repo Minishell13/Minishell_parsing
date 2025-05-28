@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:58:45 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/28 16:05:21 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/28 18:08:09 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+// Readline
+# include <readline/readline.h>
+# include <readline/history.h>
 
 typedef enum s_bool
 {

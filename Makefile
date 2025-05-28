@@ -10,12 +10,13 @@ HEADER = -I.
 DEPS = minishell.h
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
+LFLAGS = -lreadline -lncurses
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	@make -C Libft
-	@$(CC) $(CFLAGS) $(OBJS) -LLibft -lft -o $(NAME)
+	@$(CC) $(CFLAGS)  $(OBJS) -LLibft -lft -o $(NAME) $(LFLAGS)
 
 %.o: %.c $(DEPS)
 	$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
