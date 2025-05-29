@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:58:45 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/29 14:40:57 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:47:57 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # include <unistd.h>
 
 // Readline
-# include <readline/readline.h>
 # include <readline/history.h>
+# include <readline/readline.h>
 
 typedef enum s_bool
 {
@@ -39,11 +39,11 @@ typedef enum s_token_type
 	TOKEN_WORD,
 	TOKEN_PIPE,// |
 	TOKEN_REDIR_IN,// <
-	TOKEN_REDIR_OUT,// >
+	TOKEN_REDIR_OUT, // >
 	TOKEN_REDIR_APPEND,// >>
 	TOKEN_HEREDOC,// <<
 	TOKEN_AND,// &&
-	TOKEN_OR, // ||
+	TOKEN_OR,// ||
 	TOKEN_OPARENTHES,// (
 	TOKEN_CPARENTHES,// )
 	TOKEN_EMPTY,
@@ -92,32 +92,31 @@ typedef struct s_arr
 	void			*arr;
 }					t_arr;
 
-
-typedef struct	s_redir
+typedef struct s_redir
 {
-	char	*file;
-	t_bool	expanded;
-}				t_redir;
+	char			*file;
+	t_bool			expanded;
+}					t_redir;
 
 typedef struct s_tree
 {
 	t_gram			gram;
 	union
 	{
-		char	**args;
-		t_redir	redir;
-	}	data;
+		char		**args;
+		t_redir		redir;
+	}				u_data;
 	struct s_tree	*child;
 	struct s_tree	*sibling;
 }					t_tree;
 
 typedef struct s_parse_data
 {
-	t_tree *cmd;
-	t_tree *rlist;
-	t_list *words;
-	t_bool flag;
-}	t_parse_data;
+	t_tree			*cmd;
+	t_tree			*rlist;
+	t_list			*words;
+	t_bool			flag;
+}					t_parse_data;
 
 // lexer
 int					is_operator_char(char c);
@@ -133,10 +132,10 @@ int					read_quoted_word(int i, char *line);
 t_bool				has_unclosed_quotes(char *line);
 
 // lexer_command2
-int	read_quoted_if_needed(int i, char *line, char *quot);
-int	read_operator_if_needed(int i, char *line, t_token **head);
-int	read_word_loop(int i, char *line);
-int	handle_quotation_end(int i, char quot, char *line);
+int					read_quoted_if_needed(int i, char *line, char *quot);
+int					read_operator_if_needed(int i, char *line, t_token **head);
+int					read_word_loop(int i, char *line);
+int					handle_quotation_end(int i, char quot, char *line);
 
 // tree_array
 t_tree				*new_tree_node(t_gram gram);
@@ -168,15 +167,18 @@ t_bool				has_subshell_error(t_token **tokens);
 void				skip_empty_tokens(t_token **tokens);
 int					is_redirect_token(t_token *token);
 t_tree				*create_redirect_node(t_token_type type,
-						char *file, t_tree *list);
+						char *file,
+						t_tree *list);
 int					handle_redirection(t_token **tokens, t_tree *list);
-t_tree				*handle_compound_op(t_token **tokens, t_tree *left, t_token_type op);
+t_tree				*handle_compound_op(t_token **tokens, t_tree *left,
+						t_token_type op);
 
 // parsing_command3
-int	consume_token_type(t_token **tokens, t_token_type type);
-t_bool	check_subshell_errors(t_tree *inner, t_token **tokens, t_token **after_paren);
-t_bool	is_invalid_start_token(t_token **tokens);
-t_bool	has_extra_tokens(t_token **tokens);
-t_bool	is_invalid_pipe_token(t_token *token);
+int					consume_token_type(t_token **tokens, t_token_type type);
+t_bool				check_subshell_errors(t_tree *inner, t_token **tokens,
+						t_token **after_paren);
+t_bool				is_invalid_start_token(t_token **tokens);
+t_bool				has_extra_tokens(t_token **tokens);
+t_bool				is_invalid_pipe_token(t_token *token);
 
 #endif

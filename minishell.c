@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:45:00 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/29 12:21:05 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:48:49 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void print_tree(t_tree *node, int indent)
 
     printf("%*s%s", indent * 2, "", get_node_type_name(node->gram));
 
-    if (node->gram == GRAM_SIMPLE_COMMAND && node->data.args)
+    if (node->gram == GRAM_SIMPLE_COMMAND && node->u_data.args)
     {
-        char **words = node->data.args;
+        char **words = node->u_data.args;
         printf(": [");
         for (int i = 0; words[i]; i++)
         {
@@ -54,7 +54,7 @@ void print_tree(t_tree *node, int indent)
         printf("]");
     }
     else if (node->gram == GRAM_HEREDOC || node->gram == GRAM_REDIR_IN || node->gram == GRAM_REDIR_OUT || node->gram == GRAM_REDIR_APPEND)
-        printf(": \"%s\" , %u", node->data.redir.file, node->data.redir.expanded);
+        printf(": \"%s\" , %u", node->u_data.redir.file, node->u_data.redir.expanded);
         
 
     printf("\n");
