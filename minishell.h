@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:58:45 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/28 18:08:09 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:40:57 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,14 @@ typedef struct s_tree
 	struct s_tree	*sibling;
 }					t_tree;
 
+typedef struct s_parse_data
+{
+	t_tree *cmd;
+	t_tree *rlist;
+	t_list *words;
+	t_bool flag;
+}	t_parse_data;
+
 // lexer
 int					is_operator_char(char c);
 int					operators(int i, char *line, t_token **head);
@@ -124,6 +132,12 @@ t_token_type		get_token_type(char *str);
 int					read_quoted_word(int i, char *line);
 t_bool				has_unclosed_quotes(char *line);
 
+// lexer_command2
+int	read_quoted_if_needed(int i, char *line, char *quot);
+int	read_operator_if_needed(int i, char *line, t_token **head);
+int	read_word_loop(int i, char *line);
+int	handle_quotation_end(int i, char quot, char *line);
+
 // tree_array
 t_tree				*new_tree_node(t_gram gram);
 t_tree				*new_tree_leaf(t_gram gram, char *s);
@@ -133,7 +147,7 @@ void				append_to_list(t_list **list, t_list *new_node);
 
 // Parser
 t_tree				*parse_command(t_token **tokens);
-t_tree				*parse_pipeline(t_token **tokens);
+t_tree				*parse_pipe(t_token **tokens);
 t_tree				*parse_compound_command(t_token **tokens);
 t_tree				*parse_command_list(t_token **tokens);
 t_tree				*parse_complete_command(t_token **tokens);
@@ -147,8 +161,8 @@ t_tree				*parse_simple_command(t_token **tokens);
 int					count_words(t_list *word_list);
 int					fill_words_array(char **arr, t_list *word_list);
 t_list				*collect_words(t_token **tokens);
-int					consume_token_type(t_token **tokens, t_token_type type);
-void				parse_subshell_redirects(t_token **tokens, t_tree *node);
+t_bool				fill_args(t_tree *cmd, t_list *words);
+t_bool				has_subshell_error(t_token **tokens);
 
 // parsing_command2
 void				skip_empty_tokens(t_token **tokens);
@@ -156,5 +170,13 @@ int					is_redirect_token(t_token *token);
 t_tree				*create_redirect_node(t_token_type type,
 						char *file, t_tree *list);
 int					handle_redirection(t_token **tokens, t_tree *list);
+t_tree				*handle_compound_op(t_token **tokens, t_tree *left, t_token_type op);
+
+// parsing_command3
+int	consume_token_type(t_token **tokens, t_token_type type);
+t_bool	check_subshell_errors(t_tree *inner, t_token **tokens, t_token **after_paren);
+t_bool	is_invalid_start_token(t_token **tokens);
+t_bool	has_extra_tokens(t_token **tokens);
+t_bool	is_invalid_pipe_token(t_token *token);
 
 #endif

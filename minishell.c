@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:45:00 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/28 18:10:04 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/29 12:21:05 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void print_tree(t_tree *node, int indent)
         printf(": [");
         for (int i = 0; words[i]; i++)
         {
-            printf("\"%s\"", words[i]);
+            printf(" %s ", words[i]);
             if (words[i + 1])
                 printf(", ");
         }

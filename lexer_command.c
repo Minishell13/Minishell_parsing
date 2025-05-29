@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:28:09 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/28 16:04:48 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/29 12:41:57 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ void	token_add_back(t_token **head, t_token *new_token)
 	tmp->next = new_token;
 }
 
-
 t_bool	has_unclosed_quotes(char *line)
 {
-	char quote = 0;
+	char	quote;
 
+	quote = 0;
 	while (*line)
 	{
 		if (*line == '\'' || *line == '"')
@@ -84,9 +84,9 @@ t_bool	has_unclosed_quotes(char *line)
 	if (quote)
 	{
 		fprintf(stderr, "syntax error: unclosed quote `%c`", quote);
-		return true;
+		return (true);
 	}
-	return false;
+	return (false);
 }
 
 int	read_quoted_word(int i, char *line)

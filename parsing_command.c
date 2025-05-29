@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:28:52 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/28 16:30:06 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:18:57 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,32 @@ t_list	*collect_words(t_token **tokens)
 	return (list);
 }
 
-// ------------------- parse_subshell functions
-int	consume_token_type(t_token **tokens, t_token_type type)
+t_bool	fill_args(t_tree *cmd, t_list *words)
 {
-	if (!*tokens || (*tokens)->type != type)
-		return (0);
-	*tokens = (*tokens)->next;
-	return (1);
+	int	count;
+
+	if (!words)
+		return (false);
+	count = count_words(words);
+	cmd->data.args = malloc(sizeof(char *) * (count + 1));
+	if (!cmd->data.args)
+		return (false);
+	if (!fill_words_array(cmd->data.args, words))
+		return (false);
+	return (true);
 }
 
+t_bool	has_subshell_error(t_token **tokens)
+{
+	if (*tokens && (*tokens)->type == TOKEN_OPARENTHES)
+	{
+		skip_empty_tokens(tokens);
+		if ((*tokens)->next)
+			printf("syntax error: near unexpected token `%s'\n",
+				(*tokens)->next->value);
+		else
+			parse_subshell(tokens);
+		return (true);
+	}
+	return (false);
+}
