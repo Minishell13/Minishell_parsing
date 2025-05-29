@@ -1,16 +1,21 @@
 ## Lexer
 ## Parser
-redirect file something --> io
-case 1:   echo OK > a
-case 2:   > a echo OK 
-- cat Makefile > a
+
+> <<kdsjf && (ls <<in1 arg1 >>out1) >ls && ls
 COMPLETE_COMMAND
-  SIMPLE_COMMAND: ["cat", "Makefile"]
+  AND
     IO_REDIRECT
-      REDIR_OUT: "a" , 0
-- > a cat Makefile 
-COMPLETE_COMMAND
-  IO_REDIRECT
-    REDIR_OUT: "a" , 0
-The simple example of that you need to  have a simple cmd node before any any any any redir node
-wc > a "ls -l"
+      HEREDOC: "kdsjf" , 1
+    SUBSHELL
+      SIMPLE_COMMAND: [ ls ,  arg1 ]
+        IO_REDIRECT
+          HEREDOC: "in1" , 1
+          REDIR_APPEND: "out1" , 0
+  AND
+    IO_REDIRECT
+      REDIR_OUT: "ls" , 0
+    SIMPLE_COMMAND: [ ls ]
+
+
+
+(asdasd --> leak

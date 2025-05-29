@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:45:00 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/29 14:48:49 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/29 18:10:22 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,61 +63,130 @@ void print_tree(t_tree *node, int indent)
     print_tree(node->sibling, indent);
 }
 
+void	free_string_array(char **arr)
+{
+	int	i;
 
-// int main(int ac, char **av, char **env)
-// {
-//     t_token *head;
-//     t_tree *tree;
-//     char *line;
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
+}
 
-//     (void)ac;
-//     (void)av;
-//     (void)env;
-    
-//     line = get_next_line(0);
-//     while (line)
-//     {
-//         head = lexer(line);
-//         tree = parse_complete_command(&head);
-//         if (tree)
-//         {
-//             print_tree(tree, 0);
-//         }
-//         else
-//         {
-//             printf("\n");
-//         }
-//         line = get_next_line(0);
-//     }
-    
-//     return 0;
-// }
+void	free_tokens(t_token *token)
+{
+	t_token	*tmp;
+
+	while (token)
+	{
+		tmp = token->next;
+		free(token->value);
+		free(token);
+		token = tmp;
+	}
+}
+
+void free_list(t_list *list)
+{
+    t_list *tmp;
+
+    while (list)
+    {
+        tmp = list->next;
+        free(list);  // only free the list node itself
+        list = tmp;
+    }
+}
+
+void	free_tree(t_tree *node)
+{
+	t_tree	*next;
+
+	while (node)
+	{
+		next = node->sibling;
+
+		// Free args for SIMPLE_COMMAND
+		if (node->gram == GRAM_SIMPLE_COMMAND && node->u_data.args)
+			free_string_array(node->u_data.args);
+
+		// Free file for any redirection node
+		else if ((node->gram == GRAM_IO_REDIRECT
+				|| node->gram == GRAM_REDIR_IN
+				|| node->gram == GRAM_REDIR_OUT
+				|| node->gram == GRAM_REDIR_APPEND
+				|| node->gram == GRAM_HEREDOC)
+				&& node->u_data.redir.file)
+			free(node->u_data.redir.file);
+
+		// Recurse on children (command_list inside subshell, etc.)
+		if (node->child)
+			free_tree(node->child);
+
+		free(node);
+		node = next;
+	}
+}
 
 
+void	free_all(t_token *token, t_tree *tree)
+{
+	free_tokens(token);
+	free_tree(tree);
+}
 
+
+void print_tokens(t_token *head)
+{
+    if (!head)
+    {
+        printf("NULL");
+        return;
+    }
+    while (head)
+    {
+        printf("TOKEN: %s\n", head->value);
+        head = head->next;
+    }
+}
 int	main(int ac, char **av, char **ev)
 {
     t_token *head;
+    t_token *head_root;
     t_tree *tree;
     char *line;
 
     (void)ac;
     (void)av;
     (void)ev;
-
-	while (1)
-	{
-		line = readline("> ");
-		if (!line)
-		{
-			printf("exit\n");
-			break ;
-		}
+	head = NULL;
+	head_root = NULL;
+    tree = NULL;
+    while (1)
+    {
+        line = readline("> ");
+        if (!line)
+        {
+            printf("exit\n");
+            break ;
+        }
         if (*line)
-	 		add_history(line);
+            add_history(line);
 
-        // TODO: Put the parser logic here, [Just get the line from readline (like get_next_line)]
+        // Free previous allocations before new ones
+        free_all(head_root, tree);
+        head = NULL;
+        tree = NULL;
+
         head = lexer(line);
+        if (!head)
+        {
+            free(line);
+            continue; // or handle lexer failure
+        }
+        head_root = head;
         tree = parse_complete_command(&head);
         if (tree)
         {
@@ -127,12 +196,10 @@ int	main(int ac, char **av, char **ev)
         {
             printf("\n");
         }
-        
-		// printf("line: %s\n", line);
-		free(line);
-	}
+        free(line);
+    }
     rl_clear_history();
-
+    free_all(head_root, tree);
 	return (EXIT_SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:44:16 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/29 13:55:51 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/29 19:25:09 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_tree	*parse_subshell(t_token **tokens)
 {
 	t_tree	*node;
 	t_tree	*inner;
+	t_tree	*redir_list;
 	t_token	*after_paren;
 
 	if (!consume_token_type(tokens, TOKEN_OPARENTHES))
@@ -28,11 +29,13 @@ t_tree	*parse_subshell(t_token **tokens)
 	if (!node)
 		return (NULL);
 	tree_add_child(node, inner);
+	if (!parse_subshell_redirs(tokens, inner, &redir_list))
+		return (NULL);
 	return (node);
 }
 
-t_bool	handle_redirect(
-	t_token **tokens, t_tree **rlist, t_tree *cmd, t_bool flag)
+t_bool	handle_redirect(t_token **tokens, t_tree **rlist, t_tree *cmd,
+		t_bool flag)
 {
 	if (flag && !*rlist)
 	{
@@ -118,11 +121,24 @@ t_tree	*parse_simple_command(t_token **tokens)
 	if (!data.cmd)
 		return (NULL);
 	if (!collect_words_and_redirects(tokens, &data))
+	{
+		free(data.cmd);
+		free_list(data.words);
 		return (NULL);
+	}
 	if (has_subshell_error(tokens))
+	{
+		free(data.cmd);
+		free_list(data.words);
 		return (NULL);
+	}
 	if (data.flag && !fill_args(data.cmd, data.words))
+	{
+		free(data.cmd);
+		free_list(data.words);
 		return (NULL);
+	}
+	free_list(data.words);
 	if (data.flag)
 		tree_add_child(data.cmd, data.rlist);
 	return (data.cmd);

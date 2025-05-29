@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:00:23 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/29 14:39:43 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:43:15 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ t_token	*lexer(char *line)
 				i = read_word(i, line, &head);
 		}
 		if (i == -1)
+		{
+			free_tokens(head);
 			return (NULL);
+		}
 	}
 	return (head);
 }

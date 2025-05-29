@@ -14,6 +14,7 @@
         "utility": "c",
         "minishell.h": "c",
         "history.h": "c",
-        "unistd.h": "c"
+        "unistd.h": "c",
+        "cstdlib": "c"
     }
 }

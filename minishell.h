@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:58:45 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/29 14:47:57 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:43:39 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ int					read_quoted_if_needed(int i, char *line, char *quot);
 int					read_operator_if_needed(int i, char *line, t_token **head);
 int					read_word_loop(int i, char *line);
 int					handle_quotation_end(int i, char quot, char *line);
+t_tree				*parse_subshell_redirs(t_token **tokens, t_tree *inner,
+						t_tree **redir_list);
 
 // tree_array
 t_tree				*new_tree_node(t_gram gram);
@@ -180,5 +182,10 @@ t_bool				check_subshell_errors(t_tree *inner, t_token **tokens,
 t_bool				is_invalid_start_token(t_token **tokens);
 t_bool				has_extra_tokens(t_token **tokens);
 t_bool				is_invalid_pipe_token(t_token *token);
+
+
+
+void free_list(t_list *list);
+void	free_tokens(t_token *token);
 
 #endif
