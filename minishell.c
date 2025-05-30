@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:45:00 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/30 17:23:34 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:20:17 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,10 +186,6 @@ int	main(int ac, char **av, char **ev)
         if (tree)
         {
             print_tree(tree, 0);
-        }
-        else
-        {
-            printf("\n");
         }
         free(line);
     }

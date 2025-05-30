@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:46:40 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/30 17:47:01 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:16:48 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ t_tree	*parse_compound_command(t_token **tokens)
 			free_tree(left);
 			return (NULL);
 		}
+		left = right;
 		flag = false;
 	}
 	if (flag == true)

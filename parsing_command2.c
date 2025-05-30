@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:36:09 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/30 17:12:38 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:20:01 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ t_tree	*handle_compound_op(t_token **tokens, t_tree *left, t_token_type op)
 		gram_type = GRAM_OPERATOR_OR;
 	node = new_tree_node(gram_type);
 	if (!node)
+	{
+		free_tree(right);
 		return (NULL);
+	}
 	tree_add_child(node, left);
 	tree_add_child(node, right);
 	return (node);
