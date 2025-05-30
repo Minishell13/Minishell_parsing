@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:45:00 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/29 18:10:22 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:23:34 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,27 +108,22 @@ void	free_tree(t_tree *node)
 	{
 		next = node->sibling;
 
-		// Free args for SIMPLE_COMMAND
-		if (node->gram == GRAM_SIMPLE_COMMAND && node->u_data.args)
+		if (node->gram == GRAM_SIMPLE_COMMAND)
 			free_string_array(node->u_data.args);
 
-		// Free file for any redirection node
-		else if ((node->gram == GRAM_IO_REDIRECT
-				|| node->gram == GRAM_REDIR_IN
-				|| node->gram == GRAM_REDIR_OUT
-				|| node->gram == GRAM_REDIR_APPEND
-				|| node->gram == GRAM_HEREDOC)
-				&& node->u_data.redir.file)
+		if ((node->gram == GRAM_IO_REDIRECT
+			 || node->gram == GRAM_REDIR_IN
+			 || node->gram == GRAM_REDIR_OUT
+			 || node->gram == GRAM_REDIR_APPEND
+			 || node->gram == GRAM_HEREDOC))
 			free(node->u_data.redir.file);
 
-		// Recurse on children (command_list inside subshell, etc.)
-		if (node->child)
-			free_tree(node->child);
-
+		free_tree(node->child); // this will handle child + its siblings
 		free(node);
 		node = next;
 	}
 }
+
 
 
 void	free_all(t_token *token, t_tree *tree)

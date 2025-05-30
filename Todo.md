@@ -1,4 +1,5 @@
 ## Lexer
+some|'some
 ## Parser
 
 > <<kdsjf && (ls <<in1 arg1 >>out1) >ls && ls
@@ -19,3 +20,16 @@ COMPLETE_COMMAND
 
 
 (asdasd --> leak
+
+> dasd||asdas
+COMPLETE_COMMAND
+  OR
+    SIMPLE_COMMAND: [ dasd ]
+    SIMPLE_COMMAND: [ asdas ]
+> asdasd||
+syntax error: unexpected token 
+
+> asdasdas|
+syntax error: unexpected token after '|'
+> adsadsa&&
+syntax error: unexpected token

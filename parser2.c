@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:44:16 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/29 19:25:09 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:25:14 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ t_tree	*parse_subshell(t_token **tokens)
 	skip_empty_tokens(tokens);
 	inner = parse_command_list(tokens);
 	if (!check_subshell_errors(inner, tokens, &after_paren))
+	{
+		free_tree(inner);
 		return (NULL);
+	}
 	node = new_tree_node(GRAM_SUBSHELL);
 	if (!node)
 		return (NULL);
@@ -117,6 +120,7 @@ t_tree	*parse_simple_command(t_token **tokens)
 
 	data.rlist = NULL;
 	data.words = NULL;
+	data.cmd = NULL;
 	data.flag = find_command_type(tokens, &data.cmd);
 	if (!data.cmd)
 		return (NULL);

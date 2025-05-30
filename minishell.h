@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:58:45 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/29 17:43:39 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:02:10 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,5 +187,6 @@ t_bool				is_invalid_pipe_token(t_token *token);
 
 void free_list(t_list *list);
 void	free_tokens(t_token *token);
+void	free_tree(t_tree *node);
 
 #endif

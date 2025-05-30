@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:28:09 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/29 17:46:09 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:38:49 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_bool	has_unclosed_quotes(char *line)
 	}
 	if (quote)
 	{
-		fprintf(stderr, "syntax error: unclosed quote `%c`", quote);
+		printf("syntax error: unclosed quote `%c`\n", quote);
 		return (true);
 	}
 	return (false);

@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:36:09 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/29 17:08:39 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:12:38 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_tree	*handle_compound_op(t_token **tokens, t_tree *left, t_token_type op)
 		|| (*tokens)->type == TOKEN_PIPE || (*tokens)->type == TOKEN_AND
 		|| (*tokens)->type == TOKEN_OR)
 	{
-		printf("syntax error: unexpected token \n");
+		printf("syntax error: unexpected token\n");
 		return (NULL);
 	}
 	right = parse_pipe(tokens);
