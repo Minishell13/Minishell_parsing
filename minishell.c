@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:45:00 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/30 18:20:17 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:14:23 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,12 @@ void	free_tree(t_tree *node)
 	}
 }
 
-
-
 void	free_all(t_token *token, t_tree *tree)
 {
+    if (!token || !tree)
+    {
+        return;
+    }
 	free_tokens(token);
 	free_tree(tree);
 }
