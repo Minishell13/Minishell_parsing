@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:36:09 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/05/30 18:20:01 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:19:49 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	handle_redirection(t_token **tokens, t_tree *list)
 	skip_empty_tokens(tokens);
 	if (!*tokens || (*tokens)->type != TOKEN_WORD)
 	{
-		printf("syntax error near unexpected token `newline'");
+		printf("syntax error near unexpected token `newline'\n");
 		return (0);
 	}
 	file = (*tokens)->value;
